@@ -47,16 +47,20 @@ file | description
 DataDictionary.jl | Encodes the species and reaction bounds arrays and the objective array. 
 Debug.txt | List of reactions and species used to generate the model code.
 FluxDriver.jl | Julia interface with the [GLPK](https://github.com/JuliaOpt/GLPK.jl) solver. Users should `NEVER, UNDER ANY CIRCUMSTANCES, EVER` edit this file.
-Include.jl | Encodes all the include statements for the project. Should be included at the top of top-level driver scripts.
+Bounds.jl | Updates the species and reaction bounds and sets the transcription and translation rates.
+TXTLDictionary.jl | Encodes the cell-free protein synthesis parameters. Data is stored in a [Julia dictionary](http://docs.julialang.org/en/stable/stdlib/collections/?highlight=dict#Base.Dict) type and can be accessed through the appropriate key.
+Calculate_constraints.jl | Calculates species constraints, the maximum rate of accumulation and depletion, based on concentrations, measurement data, and user definition. 
 Network.dat | Stoichiometric array for the model.
+Include.jl | Encodes all the include statements for the project. Should be included at the top of top-level driver scripts.
+TXTL_ensemble.jl | Algorithm that generates the ensmeble of transcription/translation parameter sets via Monte Carlo sampling.
 Solve_bc.jl | Default top-level driver implementation to solve for the base case.
 Solve_combinations.jl | Default top-level driver implementation to solve for the combination sets.
 Solve_svd.jl | Default top-level driver implementation to solve for the singular value decomposition set.
+Simulated_annealing_algorithm.jl | Simulated annealing algorithm that minimizes the error against data and flux uncertainty by varying the members of the constraint set.
+CalcError.jl | Calculates the error against synthetic data.
 Solve_simulated_annealing.jl | Default top-level driver implementation to solve for the simulated annealing sets.
-Bounds.jl | Updates the species and reaction bounds and sets the transcription and translation rates.
-TXTLDictionary.jl | Encodes the cell-free protein synthesis parameters. Data is stored in a [Julia dictionary](http://docs.julialang.org/en/stable/stdlib/collections/?highlight=dict#Base.Dict) type and can be accessed through the appropriate key.
-calculate_constraints.jl | Calculates species constraints, the maximum rate of accumulation and depletion, based on concentrations, measurement data, and user definition. 
-
+Plot_error_vs_flux_uncertainty.jl | Plots error against data vs flux uncertainty for base case, exclusion and inclusion sets, SVD set, and simulated annealing sets.
+Plot_error_vs_length.jl | Plots error against data vs length of constraint set for simulated annealing sets.
 
 
 ### Model code and parameter ensemble
