@@ -49,9 +49,7 @@ Debug.txt | List of reactions and species used to generate the model code.
 FluxDriver.jl | Julia interface with the [GLPK](https://github.com/JuliaOpt/GLPK.jl) solver. Users should `NEVER, UNDER ANY CIRCUMSTANCES, EVER` edit this file.
 Include.jl | Encodes all the include statements for the project. Should be included at the top of top-level driver scripts.
 Network.dat | Stoichiometric array for the model.
-<!--Solve.jl | Default top-level driver implementation.-->
 Solve_bc.jl | Default top-level driver implementation to solve for the base case.
-<!--SolveSingle.jl | Default top-level driver implementation to solve for the single addition sets.-->
 Solve_combinations.jl | Default top-level driver implementation to solve for the combination sets.
 Solve_svd.jl | Default top-level driver implementation to solve for the singular value decomposition set.
 Solve_simulated_annealing.jl | Default top-level driver implementation to solve for the simulated annealing sets.
