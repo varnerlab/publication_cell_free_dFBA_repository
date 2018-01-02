@@ -130,11 +130,6 @@ for i in 1:length(metabolite_list)
 end
 
 initial_conditions = zeros(n_species,1)
-#for species_index in 1:n_species
-#  initial_conditions[species_index] = Mean[metabolite_list[species_index]][1]
-##  @show species_index,metabolite_list[species_index],Mean[metabolite_list[species_index]][1]
-#end
-#initial_conditions[tRNA_index] =  .01 #initial_conditions[145]*4/20
 for species_index in 1:n_species
 	if in(species_index,tRNA_index)
 		initial_conditions[species_index] = Mean[metabolite_list[species_index]][2]
@@ -160,7 +155,6 @@ species_constraint_index = copy(dataset_index)
 #species_constraint_index = dataset_index[1:10]
 
 plot_color = "orangered"
-
 
 data_dictionary["initial_conditions"] = initial_conditions
 # Original values:
@@ -194,13 +188,9 @@ TXTL_dictionary["RIBOSOME_elongation_rate"] = params[6]
 TXTL_dictionary["mRNA_saturation_coefficient"] = params[7]
 TXTL_dictionary["mRNA_degradation_rate"] = params[8]
 
-
-
 species_constraint_array  = dataset_index
 Labels = "svd"
 num_constraint_sets = 1
-
-
 
 # set up initial conditions (use kinetic model data)
 time_state_array = zeros(n_species,length_time)
@@ -262,13 +252,11 @@ for constraint_index in 1 #constraint_index_array[1:end] ;println(Labels[constra
 	syn_data["mean"] = syn_mean
 	syn_data["upper"] = syn_data_upper
 	syn_data["lower"] = syn_data_lower
-  syn_data["lower"][3,:] = syn_data_lower[3,:]/5.3
+    syn_data["lower"][3,:] = syn_data_lower[3,:]/5.3
 
-
-
-Exit_flag = Int64[]
-uptake_array = 0
-flux_array = 0
+    Exit_flag = Int64[]
+    uptake_array = 0
+    flux_array = 0
 
 	FVA_min = Dict()
 	FVA_max = Dict()
@@ -356,4 +344,3 @@ if plot_flag
 end
 
 time_elapsed = toc()
-

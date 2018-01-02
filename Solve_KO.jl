@@ -141,11 +141,6 @@ for i in 1:length(metabolite_list)
 end
 
 initial_conditions = zeros(n_species,1)
-#for species_index in 1:n_species
-#  initial_conditions[species_index] = Mean[metabolite_list[species_index]][1]
-##  @show species_index,metabolite_list[species_index],Mean[metabolite_list[species_index]][1]
-#end
-#initial_conditions[tRNA_index] =  .01 #initial_conditions[145]*4/20
 for species_index in 1:n_species
 	if in(species_index,tRNA_index)
 		initial_conditions[species_index] = Mean[metabolite_list[species_index]][2]
@@ -205,8 +200,6 @@ species_constraint_index = copy(dataset_index)
 
 plot_color = "orangered"
 
-
-
 single_species_additions = [3 "M_13dpg_c"; 5 "M_2pg_c"; 6 "M_3pg_c"; 44 "M_dhap_c"; 48 "M_f6p_c"; 50 "M_fdp_c"; 55 "M_g3p_c"; 56 "M_g6p_c"; 105 "M_pep_c"; 4 "M_2ddg6p_c"; 11 "M_6pgc_c"; 12 "M_6pgl_c"; 46 "M_e4p_c"; 117 "M_r5p_c"; 118 "M_ru5p_D_c"; 119 "M_s7p_c"; 138 "M_xu5p_D_c"; 16 "M_accoa_c"; 21 "M_akg_c"; 36 "M_cit_c"; 54 "M_fum_c"; 65 "M_glx_c"; 78 "M_icit_c"; 102 "M_oaa_c"; 124 "M_succoa_c"]
 combo_species_additions = [44 "M_dhap_c"; 105 "M_pep_c"; 11 "M_6pgc_c"; 138 "M_xu5p_D_c";  36 "M_cit_c"; 54 "M_fum_c"]
 
@@ -226,8 +219,6 @@ num_constraint_sets = size(species_constraint_array,1)
 parameter = ones(202,2)
 parameter[:,1] = parameter[:,1]*110
 parameter[:,2] = parameter[:,2]*0.03
-
-
 
 # set up initial conditions (use kinetic model data)
 time_state_array = zeros(n_species,length_time)
@@ -284,11 +275,9 @@ for constraint_index in constraint_index_array[1:end] ;println(Labels[constraint
 	syn_data["upper"] = syn_data_upper
 	syn_data["lower"] = syn_data_lower
 
-
-
-Exit_flag = Int64[]
-uptake_array = 0
-flux_array = 0
+    Exit_flag = Int64[]
+    uptake_array = 0
+    flux_array = 0
 
 	FVA_min = Dict()
 	FVA_max = Dict()
@@ -335,9 +324,7 @@ flux_array = 0
 
 				FVA_min[rxn_idx][t,:] = flux_array[1:194]
 				Percentage_failed_tps_min[rxn_idx] = sum(5-exit_flag)/length(experimental_time[1:end-1])
-
-
-
+                
 				# maximize flux
 				data_dictionary["objective_coefficient_array"] = zeros(number_of_fluxes)
 				data_dictionary["objective_coefficient_array"][flux_index] = 1
@@ -374,11 +361,9 @@ flux_array = 0
     precision = 1/norm(FVA_max[rxn_idx]-FVA_min[rxn_idx])
 		writedlm("FVA_KO/$constraint_subset/$rxn_idx/accuracy",accuracy)
 		writedlm("FVA_KO/$constraint_subset/$rxn_idx/precision",precision)
-			end
+	end
 
 end # for constraint_index in constraint_index_array
-
-
 
 plot_flag = false
 if plot_flag

@@ -166,8 +166,6 @@ species_constraint_index = copy(dataset_index)
 
 plot_color = "orangered"
 
-
-
 single_species_additions = [3 "M_13dpg_c"; 5 "M_2pg_c"; 6 "M_3pg_c"; 44 "M_dhap_c"; 48 "M_f6p_c"; 50 "M_fdp_c"; 55 "M_g3p_c"; 56 "M_g6p_c"; 105 "M_pep_c"; 4 "M_2ddg6p_c"; 11 "M_6pgc_c"; 12 "M_6pgl_c"; 46 "M_e4p_c"; 117 "M_r5p_c"; 118 "M_ru5p_D_c"; 119 "M_s7p_c"; 138 "M_xu5p_D_c"; 16 "M_accoa_c"; 21 "M_akg_c"; 36 "M_cit_c"; 54 "M_fum_c"; 65 "M_glx_c"; 78 "M_icit_c"; 102 "M_oaa_c"; 124 "M_succoa_c"]
 combo_species_additions = [ 44 "M_dhap_c"; 105 "M_pep_c"; 11 "M_6pgc_c"; 138 "M_xu5p_D_c";  36 "M_cit_c"; 54 "M_fum_c"]
 
@@ -194,8 +192,6 @@ parameter = ones(202,2)
 parameter[:,1] = parameter[:,1]*110
 parameter[:,2] = parameter[:,2]*0.03
 
-
-
 # set up initial conditions (use kinetic model data)
 time_state_array = zeros(n_species,length_time)
 time_state_array[:,1] = initial_conditions
@@ -208,7 +204,6 @@ EXIT_FLAG = zeros(length_time-1,num_constraint_sets)
 overall_state_array = zeros()
 # loop for all constraint subsets
 FVA_run = true
-
 
 constraint_index_array = collect(1:num_constraint_sets)
 
@@ -254,9 +249,9 @@ for constraint_index in constraint_index_array[1:end] ;println(Labels[constraint
 [60,syn_index] = 1*exp(-0.01*syn_index)
 	#end
 
-Exit_flag = Int64[]
-uptake_array = 0
-flux_array = 0
+    Exit_flag = Int64[]
+    uptake_array = 0
+    flux_array = 0
 
 	FVA_min = Dict()
 	FVA_max = Dict()
@@ -305,11 +300,7 @@ flux_array = 0
 
 				FVA_min[rxn_idx][t,:] = flux_array[1:194]
 				Percentage_failed_tps_min[rxn_idx] = sum(5-exit_flag)/length(experimental_time[1:end-1])
-
-#		            @show flux_index, constraint_index
-#		            @show flux_array
-#					eval(parse("fva_flux_array_"fva_flag*"_max"))[:,flux_index,constraint_index] = flux_array
-
+                
 				# maximize flux
 				data_dictionary["objective_coefficient_array"] = zeros(number_of_fluxes)
 				data_dictionary["objective_coefficient_array"][flux_index] = 1
@@ -331,9 +322,7 @@ flux_array = 0
 	# "Accuracy" - based on dFBA result
 	error = CalcError(Upper,Lower,experimental_time,time_state_array,data_dictionary)
 	accuracy = 1/sum(error)
-
-#
-#	EXIT_FLAG[:,constraint_index] = Exit_flag
+    
 	writedlm("FVA/$constraint_subset/time_state_array.txt",time_state_array)
 	for rxn_idx in 1:194
 		if !isdir("FVA/$constraint_subset/$rxn_idx")
@@ -344,11 +333,11 @@ flux_array = 0
 		writedlm("FVA/$constraint_subset/$rxn_idx/Percentage_failed_tps_min",Percentage_failed_tps_min[rxn_idx])
 		writedlm("FVA/$constraint_subset/$rxn_idx/Percentage_failed_tps_max",Percentage_failed_tps_max[rxn_idx])
 
-    # "Precision" - based on FVA result
-    precision = 1/norm(FVA_max[rxn_idx]-FVA_min[rxn_idx])
-		writedlm("FVA/$constraint_subset/$rxn_idx/accuracy",accuracy)
-		writedlm("FVA/$constraint_subset/$rxn_idx/precision",precision)
-			end
+        # "Precision" - based on FVA result
+        precision = 1/norm(FVA_max[rxn_idx]-FVA_min[rxn_idx])
+	    writedlm("FVA/$constraint_subset/$rxn_idx/accuracy",accuracy)
+	    writedlm("FVA/$constraint_subset/$rxn_idx/precision",precision)
+	end
 
 end # for constraint_index in constraint_index_array
 
